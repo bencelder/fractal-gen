@@ -2,8 +2,8 @@ function initialize(){
     c = document.getElementById("myCanvas");
     ctx = c.getContext("2d");
 
-    iterations = 10;
-    res = 10;
+    iterations = 50;
+    res = 1;
 
     keys = [];
     mousePressed = false;
@@ -26,13 +26,23 @@ function P_next(z, c){
     return a;
 }
 
+// takes in x1 < x < x2 and returns a
+// linear mapping to y
+// y1 < y < y2
+function linearMap(x, x1, x2, y1, y2){
+    var a = (y2 - y1) / (x2 - x1);
+    var y = y1 + a * (x - x1);
+    return y;
+}
+
 function draw_fract(){
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, c.width, c.height);
 
     ctx.fillStyle = "#000000";
-    for (var i = 0; i < c.width; i+=1){
-        for (var j = 0; j < c.height; j+=1){
+    var alpha;
+    for (var i = 0; i < c.width; i+=res){
+        for (var j = 0; j < c.height; j+=res){
             x = x_min + i * dx;
             y = y_min + j * dx;
 
@@ -47,10 +57,11 @@ function draw_fract(){
 
             // k = iterations => black
             // k = 0 => white
-
-            if (c_mag(z) < 2.)
-                ctx.fillRect(i, j, 1, 1);
-
+            alpha = linearMap(k, 0, iterations, 0.3, 0.8);
+            if (k == iterations)
+                alpha = 1.;
+            ctx.fillStyle = "rgba( 0, 0, 0, " + alpha
+            ctx.fillRect(i, j, res, res);
         }
     }
 }
