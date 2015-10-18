@@ -2,13 +2,9 @@
 <html>
     <head>
         <title>fractal generator</title>
-        <script type="text/javascript" src="vector.js">
+        <script type="text/javascript" src="complex.js">
         </script>
-        <script type="text/javascript" src="rect.js">
-        </script>
-        <script type="text/javascript" src="game_objs.js">
-        </script>
-        <script type="text/javascript" src="sea.js">
+        <script type="text/javascript" src="fract.js">
         </script>
     </head>
     <body
@@ -16,6 +12,8 @@
         onkeydown="keyDown(event);"
         onkeyup="keyUp(event);"
         onmousemove="mouseMove(event);"
+        onmousedown="mouseDown(event);"
+        onmouseup="mouseUp(event);"
         style="background-color:#444444">
         <center>
             <canvas id="myCanvas" height="700px" width="700px"
