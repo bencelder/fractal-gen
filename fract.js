@@ -15,11 +15,11 @@ function initialize(){
 
     x_min = -2.5;
     x_max = 1.5;
-    y_min = -2.;
-    y_max = 2.;
 
+    dx = (x_max - x_min) / c.width;
 
-    dx = (y_max - y_min) / c.height;
+    y_min = - c.height * dx / 2.;
+    //y_max = + c.height * dx / 2.;
 
     draw_fract();
 }
