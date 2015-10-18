@@ -2,6 +2,9 @@ function initialize(){
     c = document.getElementById("myCanvas");
     ctx = c.getContext("2d");
 
+    c.style.border = "none";
+    size_canvas();
+
     iterations = 50;
     res = 1;
 
@@ -10,10 +13,11 @@ function initialize(){
     mdownx = 0;
     mdowny = 0;
 
-    x_min = -2.;
-    x_max = 2.;
+    x_min = -2.5;
+    x_max = 1.5;
     y_min = -2.;
     y_max = 2.;
+
 
     dx = (y_max - y_min) / c.height;
 
@@ -26,6 +30,17 @@ function P_next(z, c){
     return a;
 }
 
+function query_window_dimensions(){
+    window_w = window.innerWidth || document.body.clientWidth;
+    window_h = window.innerHeight || document.body.clientHeight;
+}
+
+function size_canvas(){
+    query_window_dimensions();
+    c.width = window_w;
+    c.height = window_h;
+}
+
 // takes in x1 < x < x2 and returns a
 // linear mapping to y
 // y1 < y < y2
@@ -36,11 +51,14 @@ function linearMap(x, x1, x2, y1, y2){
 }
 
 function draw_fract(){
+    size_canvas();
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, c.width, c.height);
 
     ctx.fillStyle = "#000000";
     var alpha;
+    a_min = 0.3;
+    a_max = 0.8;
     for (var i = 0; i < c.width; i+=res){
         for (var j = 0; j < c.height; j+=res){
             x = x_min + i * dx;
@@ -57,7 +75,7 @@ function draw_fract(){
 
             // k = iterations => black
             // k = 0 => white
-            alpha = linearMap(k, 0, iterations, 0.3, 0.8);
+            alpha = linearMap(k, 0, iterations, a_min, a_max);
             if (k == iterations)
                 alpha = 1.;
             ctx.fillStyle = "rgba( 0, 0, 0, " + alpha
@@ -89,6 +107,22 @@ function keyDown(e){
         draw_fract();
 
     }
+    
+    // x
+    if (kc == 88){
+        width = c.width * dx;
+        height = c.height * dx;
+
+        x_center = x_min + width / 2.;
+        y_center = y_min + height / 2.;
+
+        x_min = x_center - width;
+        y_min = y_center - height;
+
+        dx = dx * 2;
+
+        draw_fract();
+    }
 
     // i
     if (kc == 73){
@@ -101,6 +135,7 @@ function keyDown(e){
         iterations /= 2;
         draw_fract();
     }
+
     
 
     keys[kc] = true;
@@ -119,7 +154,9 @@ function mouseMove(e){
         delta_i = x - mdownx;
         delta_j = y - mdowny;
 
-        ctx.fillStyle = "#FFFFFF";
+        ctx.fillStyle = "rgba(255, 255, 255, 1)"
+        ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = "rgba(0, 0, 0," + a_min;
         ctx.fillRect(0, 0, c.width, c.height);
         ctx.putImageData(imageData, delta_i, delta_j);
 
