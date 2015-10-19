@@ -75,9 +75,16 @@ function draw_fract(){
 
             // k = iterations => black
             // k = 0 => white
+            /*
             alpha = linearMap(k, 0, iterations, a_min, a_max);
             if (k == iterations)
                 alpha = 1.;
+            */
+            alpha = linearMap(k, 0, iterations, 1, 0);
+            if (k == iterations)
+                alpha = 1.;
+
+
             ctx.fillStyle = "rgba( 0, 0, 0, " + alpha
             ctx.fillRect(i, j, res, res);
         }
@@ -93,6 +100,26 @@ function keyDown(e){
 
     // z
     if (kc == 90){
+        /*
+         * trying to get a temporary, low-res blowup to show
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, c.width, c.height);
+        imageData = ctx.getImageData(
+                c.width * 1/4., c.height * 1/4.,
+                c.width * 3/4., c.height * 3/4.);
+
+        var newCanvas = document.createElement("canvas");
+        newCanvas.width = imageData.width;
+        newCanvas.height = imageData.height;
+
+        newCanvas.getContext("2d").putImageData(imageData, 0, 0);
+
+        ctx.scale(2, 2);
+        ctx.drawImage(newCanvas, 0, 0);
+
+        //ctx.putImageData(imageData, 0, 0);
+        */
+
         width = c.width * dx;
         height = c.height * dx;
 
@@ -135,8 +162,6 @@ function keyDown(e){
         iterations /= 2;
         draw_fract();
     }
-
-    
 
     keys[kc] = true;
 }
