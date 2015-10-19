@@ -18,6 +18,8 @@ function initialize(){
 
     dx = (x_max - x_min) / c.width;
 
+    vals = []
+
     y_min = - c.height * dx / 2.;
     //y_max = + c.height * dx / 2.;
 
@@ -67,8 +69,20 @@ function draw_fract(){
             var z = new Complex(0, 0);
             var b = new Complex(x, y);
 
+            var z_last;
+
             for (var k = 0; k < iterations; k++){
+
+                //z_last = c_copy(z);
+                
                 z = P_next(z, b);
+
+                /*
+                if (c_equals(z, z_last))
+                    k = iterations - 1;
+                    */
+
+
                 if (c_mag(z) >= 2)
                     break;
             }

@@ -8,6 +8,17 @@ function c_print(c){
     console.log(c.re + " + i" + c.im);
 }
 
+function c_equals(a, b){
+    if (a.re == b.re && a.im == b.im)
+        return true;
+    return false;
+}
+
+function c_copy(a){
+    b = new Complex(a.re, a.im);
+    return b;
+}
+
 function c_add(a, b){
     var x = a.re + b.re;
     var y = a.im + b.im;
