@@ -66,8 +66,13 @@ function draw_fract(){
             x = x_min + i * dx;
             y = y_min + j * dx;
 
+            // Mandelbrot set
             var z = new Complex(0, 0);
             var b = new Complex(x, y);
+
+            phi = 1.61803399;
+            var z = new Complex(x, y);
+            var b = new Complex(phi - 2, phi - 1);
 
             var z_last;
 
